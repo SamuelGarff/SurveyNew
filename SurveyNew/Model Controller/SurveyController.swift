@@ -31,7 +31,7 @@ class SurveyController {
         
         // Build the URL
         
-        let requestURL = url.appendingPathExtension("json")
+        let requestURL = url.appendingPathComponent(survey.identifier.uuidString).appendingPathExtension("json")
         
         // Create a Request
         
@@ -71,11 +71,11 @@ class SurveyController {
         
     }
     
-    func fetchEmoji(completion: @escaping ([Survey]?) -> Void) {
+    func fetchEmoji(completion: @escaping () -> Void) {
         
         guard let url = baseURL?.appendingPathExtension("json") else {
             print("Bad baseURL")
-            completion([])
+            completion()
             return
         }
         
@@ -87,7 +87,7 @@ class SurveyController {
             
             guard let data = data else {
                 print("No data returned from data task")
-                completion([])
+                completion()
                 return
             }
             
@@ -95,7 +95,7 @@ class SurveyController {
             
             guard let surveyDictionaries = (try? JSONSerialization.jsonObject(with: data, options: []) as? [String: [String: String]]) else {
                 print("Fetching from JSONObject")
-                completion([])
+                completion()
                 return
             }
             
@@ -103,7 +103,7 @@ class SurveyController {
             
             
             self.surveys = surveys
-            completion(surveys)
+            completion()
             
             }.resume()
         
