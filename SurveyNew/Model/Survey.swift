@@ -81,7 +81,6 @@ struct Survey {
             return try? JSONSerialization.data(withJSONObject: dictionaryRep, options: .prettyPrinted)
             
             
-            
         }
     
     
